@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="MOTION_FB" Id="{069b4de0-b861-4a39-a1ce-08e788017311}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MOTION_FB
+VAR
+	M1: FB_DriveVirtual;
+	M1Link: FB_NcAxis;
+	bLimitFwdM1 AT %I*: BOOL;
+	bLimitBwdM1 AT %I*: BOOL;
+	bHomeSensorM1 AT %I*: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[M1Link(En := True);
+M1(En := True,
+   bLimitFwd := bLimitFwdM1,
+   bLimitBwd := bLimitBwdM1,
+   Axis := M1Link.axis);]]></ST>
+    </Implementation>
+    <LineIds Name="MOTION_FB">
+      <LineId Id="16" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

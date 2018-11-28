@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_HomePrepare" Id="{44b4f5e1-854c-4705-82a0-c1e3db13fb33}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HomePrepare
+VAR_INPUT
+	En: BOOL;
+	bReset: BOOL;
+    bExecute: BOOL;	
+    nCmdData: UINT;		
+END_VAR
+VAR_IN_OUT
+	Axis: AXIS_REF;
+END_VAR
+VAR_OUTPUT
+	EnO: BOOL;	
+	bBusy: BOOL;
+	bDone: BOOL;
+	bError: BOOL;
+	nErrorId: UDINT;
+	bSofLimEnableLowOriginal: BOOL:=TRUE;
+	bSofLimEnableHighOriginal: BOOL:=TRUE;	
+	fVelocityToCam: LREAL:=0;
+	fVelocityFromCam: LREAL:=0;		
+END_VAR
+VAR
+	fbHomeReadSoftLimEnable:FB_HomeReadSoftLimEnable;	
+	fbHomeDisableSoftLimEnable:FB_HomeWriteSoftLimEnable;
+	fbHomeReadNCVelocities: FB_HomeReadNcVelocities;
+	fbHomeResetCalibrationFlag:MC_Home;   //Only used for reset of calibration flag
+	fbExecuteRiseEdge: R_TRIG;
+	bExecuteReadNC:BOOL:=FALSE;
+	bExecuteWriteNC:BOOL:=FALSE;
+	nState:INT:=0;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[En:=EnO;
+IF bReset THEN
+	bError:=FALSE;
+	nErrorId:=0;
+END_IF 
+
+IF NOT bExecute THEN
+  bExecuteReadNC:=FALSE;
+  bExecuteWriteNC:=FALSE;   
+  nState:=0;
+END_IF
+
+fbExecuteRiseEdge(CLK:=bExecute);
+IF fbExecuteRiseEdge.Q THEN
+  bExecuteReadNC:=TRUE;  
+END_IF
+
+// Read from NC
+fbHomeReadNCVelocities(
+  En:=En,
+  bExecute:=bExecuteReadNC, // Actualy not needed for sequence 15 (set position only, no movement))
+  bReset:=bReset,
+  Axis:=Axis,
+);
+
+fbHomeReadSoftLimEnable(
+	En:=En,
+	bExecute:=bExecuteReadNC AND bExecute,
+	Axis:=Axis,
+	bReset:=bReset,	
+);
+
+// Reset calibration flag
+fbHomeResetCalibrationFlag(
+  Execute:=bExecuteReadNC,
+  HomingMode:=MC_ResetCalibration,
+  Axis:=Axis
+);
+
+bSofLimEnableLowOriginal:=fbHomeReadSoftLimEnable.bSofLimEnableLow;
+bSofLimEnableHighOriginal:=fbHomeReadSoftLimEnable.bSofLimEnableHigh;	
+
+fVelocityToCam:=fbHomeReadNCVelocities.fVelocityToCam;
+fVelocityFromCam:=fbHomeReadNCVelocities.fVelocityFromCam;
+
+IF bExecuteReadNC AND bExecute AND fbHomeReadSoftLimEnable.bDone THEN
+	fbHomeDisableSoftLimEnable.bSofLimEnableHigh:=FALSE;
+	fbHomeDisableSoftLimEnable.bSofLimEnableLow:=FALSE;
+	bExecuteWriteNC:=TRUE; //Always write (only needed if enabled actually)
+END_IF
+
+// Write to NC (disable soft limits)
+fbHomeDisableSoftLimEnable(
+	En:=En,
+	bExecute:=bExecuteWriteNC AND bExecute,
+	Axis:=Axis,
+	bReset:=bReset,	
+);
+
+bBusy:=fbHomeReadSoftLimEnable.bBusy OR fbHomeDisableSoftLimEnable.bBusy OR fbHomeReadNCVelocities.bBusy OR fbHomeResetCalibrationFlag.Busy;
+bDone:=fbHomeReadSoftLimEnable.bDone AND fbHomeDisableSoftLimEnable.bDone AND fbHomeReadNCVelocities.bDone AND fbHomeResetCalibrationFlag.Done AND bExecute;
+
+bError:=fbHomeReadSoftLimEnable.bError OR fbHomeDisableSoftLimEnable.bError OR fbHomeReadNCVelocities.bError OR fbHomeResetCalibrationFlag.Error;
+IF fbHomeReadSoftLimEnable.bError THEN
+  nErrorId:=fbHomeReadSoftLimEnable.nErrorId;
+ELSIF fbHomeDisableSoftLimEnable.bError THEN
+  nErrorId:=fbHomeDisableSoftLimEnable.nErrorId;
+ELSIF fbHomeResetCalibrationFlag.Error THEN
+  nErrorId:=fbHomeResetCalibrationFlag.ErrorId;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HomePrepare">
+      <LineId Id="9" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="143" Count="1" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="402" Count="0" />
+      <LineId Id="396" Count="0" />
+      <LineId Id="403" Count="0" />
+      <LineId Id="452" Count="0" />
+      <LineId Id="408" Count="0" />
+      <LineId Id="404" Count="0" />
+      <LineId Id="453" Count="0" />
+      <LineId Id="388" Count="1" />
+      <LineId Id="392" Count="0" />
+      <LineId Id="399" Count="0" />
+      <LineId Id="475" Count="0" />
+      <LineId Id="461" Count="5" />
+      <LineId Id="460" Count="0" />
+      <LineId Id="431" Count="0" />
+      <LineId Id="430" Count="0" />
+      <LineId Id="432" Count="0" />
+      <LineId Id="437" Count="2" />
+      <LineId Id="421" Count="0" />
+      <LineId Id="482" Count="6" />
+      <LineId Id="441" Count="0" />
+      <LineId Id="422" Count="1" />
+      <LineId Id="479" Count="0" />
+      <LineId Id="418" Count="0" />
+      <LineId Id="481" Count="0" />
+      <LineId Id="480" Count="0" />
+      <LineId Id="323" Count="0" />
+      <LineId Id="442" Count="1" />
+      <LineId Id="424" Count="0" />
+      <LineId Id="420" Count="0" />
+      <LineId Id="474" Count="0" />
+      <LineId Id="467" Count="5" />
+      <LineId Id="409" Count="0" />
+      <LineId Id="473" Count="0" />
+      <LineId Id="326" Count="0" />
+      <LineId Id="509" Count="0" />
+      <LineId Id="508" Count="0" />
+      <LineId Id="351" Count="0" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="353" Count="0" />
+      <LineId Id="356" Count="1" />
+      <LineId Id="491" Count="1" />
+      <LineId Id="354" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

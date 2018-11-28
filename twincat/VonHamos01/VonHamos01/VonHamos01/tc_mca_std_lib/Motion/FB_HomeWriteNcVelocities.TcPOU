@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_HomeWriteNcVelocities" Id="{db235f88-cc6a-42fd-a27f-0c03a858adf6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HomeWriteNcVelocities
+VAR_INPUT
+	En: BOOL;
+	bReset: BOOL;
+    bExecute: BOOL;		
+	fVelocityToCam: LREAL;
+	fVelocityFromCam: LREAL;	
+END_VAR
+VAR_IN_OUT
+	Axis: AXIS_REF;
+END_VAR
+VAR_OUTPUT
+	EnO: BOOL;	
+	bBusy: BOOL;
+	bDone: BOOL;
+	bError: BOOL;
+	nErrorId: UDINT;	
+END_VAR
+VAR
+	fbExecuteRiseEdge: R_TRIG;
+	fbWriteVelocityToCam:FB_WriteFloatParameter;
+	fbWriteVelocityFromCam:FB_WriteFloatParameter;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[En:=EnO;
+IF bReset THEN
+	bError:=FALSE;
+	nErrorId:=0;
+END_IF 
+
+fbExecuteRiseEdge(CLK:=bExecute);
+
+fbWriteVelocityToCam(
+	bExecute:=bExecute,
+	nDeviceGroup:= 16#4000,
+	nIndexOffset:= 16#6,
+	nData:=fVelocityToCam,
+	Axis:= Axis);
+	
+fbWriteVelocityFromCam(
+	bExecute:=bExecute,
+	nDeviceGroup:= 16#4000,
+	nIndexOffset:= 16#7,
+	nData:=fVelocityFromCam,
+	Axis:= Axis);
+
+bBusy:=fbWriteVelocityFromCam.bBusy OR fbWriteVelocityToCam.bBusy;
+bDone:=fbWriteVelocityFromCam.bDone AND fbWriteVelocityToCam.bDone AND bExecute;
+
+bError:=fbWriteVelocityToCam.bError OR fbWriteVelocityFromCam.bError;
+IF fbWriteVelocityToCam.bError THEN
+  nErrorId:=fbWriteVelocityToCam.nErrorId;
+ELSIF fbWriteVelocityFromCam.bError THEN
+  nErrorId:=fbWriteVelocityFromCam.nErrorId;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HomeWriteNcVelocities">
+      <LineId Id="9" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="143" Count="1" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="382" Count="0" />
+      <LineId Id="380" Count="0" />
+      <LineId Id="328" Count="0" />
+      <LineId Id="330" Count="3" />
+      <LineId Id="363" Count="0" />
+      <LineId Id="329" Count="0" />
+      <LineId Id="344" Count="0" />
+      <LineId Id="346" Count="3" />
+      <LineId Id="366" Count="0" />
+      <LineId Id="345" Count="0" />
+      <LineId Id="360" Count="0" />
+      <LineId Id="326" Count="1" />
+      <LineId Id="355" Count="0" />
+      <LineId Id="351" Count="0" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="353" Count="0" />
+      <LineId Id="356" Count="1" />
+      <LineId Id="354" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

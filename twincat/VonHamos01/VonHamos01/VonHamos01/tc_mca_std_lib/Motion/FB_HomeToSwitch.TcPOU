@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_HomeToSwitch" Id="{9890b2a1-f87c-4e55-871a-a54ee70e279d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HomeToSwitch
+VAR_INPUT
+	En: BOOL;
+	bReset: BOOL;
+    bExecute: BOOL;	
+    bCamSensor:BOOL;	
+	nSearchDirTwoardsCam: MC_Direction;
+	nSearchDirOffCam: MC_Direction;
+	fHomePosition:LREAL;	
+	fVelocityToCamNC: LREAL; //Velcoity when searching for cam
+	fVelocityFromCamNC: LREAL; // Velocity after found cam (searching for next signal transition)
+END_VAR
+VAR_IN_OUT
+	Axis: AXIS_REF;
+END_VAR
+VAR_OUTPUT
+	EnO: BOOL;	
+	bBusy: BOOL;
+	bDone: BOOL;
+	bHomed:BOOL;
+	bError: BOOL;
+	nErrorId: UDINT;
+END_VAR
+VAR
+	fbHome: MC_Home;	
+	fbWriteHomeDirCamToNC:FB_WriteParameterInNc_v1_00;
+	fbWriteHomeDirSyncToNC:FB_WriteParameterInNc_v1_00;
+	fbWriteHomeModeToNC:FB_WriteParameterInNc_v1_00;
+	fbWriteHomeVelocitiesToNC: FB_HomeWriteNcVelocities;
+	bConfigNCDone:BOOL:=FALSE;
+	fbRTrigg: R_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[En:=EnO;
+IF bReset THEN
+	bConfigNCDone:=FALSE;
+	bError:=FALSE;
+	nErrorId:=0;
+END_IF 
+	
+//Start preparation of NC if rising edge on bExecute
+fbRTrigg(CLK:=bExecute);
+IF fbRTrigg.Q THEN
+	bConfigNCDone:=FALSE;
+END_IF
+
+ 
+fbWriteHomeDirCamToNC(
+	bExecute:=bExecute AND NOT bConfigNCDone,
+	nDeviceGroup:=16#5000,
+	nIndexOffset:=16#101,	//Direction for Calibration Cam Search	
+	nData:=BOOL_TO_DWORD(nSearchDirTwoardsCam=MC_Negative_Direction),//BOOL_TO_DWORD(NOT bSearchDirTwoardsCam),
+	Axis:=Axis
+);
+
+fbWriteHomeDirSyncToNC(
+	bExecute:= bExecute AND NOT bConfigNCDone,
+	nDeviceGroup:=16#5000 ,
+	nIndexOffset:=16#102 , //Direction for Sync Impuls Search
+	nData:=BOOL_TO_DWORD(nSearchDirOffCam=MC_Negative_Direction),//BOOL_TO_DWORD(NOT bSearchDirOffCam),
+	Axis:= Axis 
+);
+
+fbWriteHomeModeToNC(
+	bExecute:=bExecute AND NOT bConfigNCDone,
+	nDeviceGroup:=16#5000,
+	nIndexOffset:=16#107,  //Reference Mode
+	nData:=1,
+	Axis:=axis);
+	
+fbWriteHomeVelocitiesToNC(
+  En:=En,
+  bExecute:=bExecute AND NOT bConfigNCDone,
+  bReset:=bReset,
+  fVelocityFromCam:=fVelocityFromCamNC,
+  fVelocityToCam:=fVelocityToCamNC,
+  Axis:=Axis);
+
+fbHome.bCalibrationCam:=bCamSensor;
+
+fbHome(
+	Execute:=bExecute AND bConfigNCDone(* AND NOT bError*),
+	Position:=fHomePosition,
+	HomingMode:=0,
+	Axis:=Axis
+	);
+bBusy:=(fbHome.Busy OR (NOT bConfigNCDone AND bExecute));
+bDone:=fbHome.Done AND bConfigNCDone;
+bHomed:=Axis.Status.Homed;
+
+IF (NOT bConfigNCDone) AND fbWriteHomeDirCamToNC.bDone AND fbWriteHomeDirSyncToNC.bDone AND fbWriteHomeModeToNC.bDone AND fbWriteHomeVelocitiesToNC.bDone THEN
+  bConfigNCDone:=TRUE;
+END_IF
+
+//For some reason MC_HOME gives an Error for one cycle of NC-Task 1 SVB (10ms default..) so filter with bExecute
+bError:=(fbHome.Error AND bExecute) OR fbWriteHomeDirCamToNC.bError OR fbWriteHomeDirSyncToNC.bError OR fbWriteHomeModeToNC.bError OR fbWriteHomeVelocitiesToNC.bError;
+
+IF (fbHome.Error AND bExecute) THEN
+  nErrorId:=fbHome.ErrorID;
+ELSIF fbWriteHomeDirCamToNC.bError THEN
+  nErrorId:=fbWriteHomeDirCamToNC.nErrorId;
+ELSIF fbWriteHomeDirSyncToNC.bError THEN
+  nErrorId:=fbWriteHomeDirSyncToNC.nErrorId;
+ELSIF fbWriteHomeModeToNC.bError THEN
+  nErrorId:=fbWriteHomeModeToNC.nErrorId;
+ELSIF fbWriteHomeVelocitiesToNC.bError THEN
+  nErrorId:=fbWriteHomeVelocitiesToNC.nErrorId;  
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HomeToSwitch">
+      <LineId Id="9" Count="0" />
+      <LineId Id="140" Count="1" />
+      <LineId Id="143" Count="1" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="260" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="98" Count="2" />
+      <LineId Id="361" Count="0" />
+      <LineId Id="255" Count="0" />
+      <LineId Id="102" Count="3" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="154" Count="5" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="216" Count="3" />
+      <LineId Id="227" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="319" Count="5" />
+      <LineId Id="318" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="267" Count="0" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="269" Count="4" />
+      <LineId Id="266" Count="0" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="284" Count="0" />
+      <LineId Id="251" Count="1" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="328" Count="0" />
+      <LineId Id="254" Count="0" />
+      <LineId Id="146" Count="0" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="148" Count="2" />
+      <LineId Id="166" Count="1" />
+      <LineId Id="231" Count="1" />
+      <LineId Id="326" Count="0" />
+      <LineId Id="325" Count="0" />
+      <LineId Id="151" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_HomeVirtual" Id="{a69b16ef-d088-4494-bcb3-4c391e3a9c2d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HomeVirtual
+VAR_INPUT
+	En: BOOL;
+	bReset: BOOL;
+	bExecute: BOOL;
+	nCmdData: UINT;
+	bLimitFwd: BOOL;
+	bLimitBwd: BOOL;	
+	bHomeSensor: BOOL;	
+	fHomePosition:LREAL;
+	nHomeRevOffset: UINT;
+END_VAR
+VAR_IN_OUT
+	Axis: AXIS_REF;
+END_VAR
+VAR_OUTPUT
+	EnO: BOOL;	
+	bBusy: BOOL;
+	bDone: BOOL;
+	bHomed:BOOL;
+	bError: BOOL;
+	nErrorId: UDINT;
+END_VAR
+VAR
+	fbHomeToSwitch: FB_HomeToSwitch;
+    fbHomeDirect: FB_HomeDirect; //Only used for direct homing (set of position)
+    fbMoveVelocity:MC_MoveVelocity;
+    fbHomePrepare:FB_HomePrepare;
+	fbHomeFinish:FB_HomeFinish;    	    		
+	fbExecuteRiseEdge: R_TRIG;
+    nHomingState:INT:=0;
+	bExecuteHomeToSwitch:BOOL:=FALSE;
+	bExecuteMoveVelocity:BOOL:=FALSE;
+	bExecutePrepare: BOOL:=FALSE;
+	bExecuteFinish: BOOL:=FALSE;
+	bExecuteHomeDirect: BOOL;
+	nCmdDataLocal: UINT;  //Ensure that nCmdData is not changed during sequence
+	bSequenceReady:BOOL:=TRUE;
+	bRestoreNCDataNeeded: BOOL:=FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[EnO:=En;
+
+IF bReset THEN	
+	bError:=FALSE;
+	nErrorId:=0;
+END_IF
+
+// Reset when bExecute is low
+IF NOT bExecute THEN
+  nHomingState:=0;
+  bSequenceReady:=TRUE;
+  bExecuteHomeToSwitch:=FALSE;
+  bExecuteHomeDirect:=FALSE;
+  bExecuteMoveVelocity:=FALSE;
+  bExecutePrepare:=FALSE;
+  bExecuteFinish:=FALSE;
+END_IF
+
+//Reset at rinsing edge of bExecute
+fbExecuteRiseEdge(CLK:=bExecute);
+IF fbExecuteRiseEdge.Q THEN
+  nCmdDataLocal:=nCmdData; //Ensure that nCmdData is not changed during sequence (nCmdData will only be read at a rising edge of bExecute)
+  bSequenceReady:=FALSE;
+  bExecutePrepare:=TRUE;  
+  bRestoreNCDataNeeded:=FALSE;
+  //Check if valid nCmdDataLocal
+  CASE nCmdDataLocal OF  	
+    1:
+    2:
+    3:
+    4:
+    15:
+    ELSE //nCmdData not valid	
+      bError:=TRUE;
+      nErrorId:=16#4FFF;   
+  END_CASE
+END_IF
+
+//############# Prepare for homing (Read from NC and reset homed flag)
+fbHomePrepare(
+  En:=En,
+  bExecute:=bExecutePrepare AND NOT bError, // Not needed for sequence 15 (set position only, no movement))
+  bReset:=bReset,
+  Axis:=Axis,
+);
+
+//############# Homing Sequences:
+CASE nCmdDataLocal OF  
+	
+   1: // Home to low limit switch
+	   CASE nHomingState OF
+		  0:
+		    bHomed:=Axis.Status.Homed;
+            // Wait for read of velocities from NC and reset of calibration flag
+	        IF fbHomePrepare.bDone AND bExecute AND NOT bSequenceReady THEN
+			  bRestoreNCDataNeeded:=TRUE;
+			  IF bLimitBwd THEN
+                nHomingState:=1;
+              ELSE
+				nHomingState:=2;  //Standing on limit switch go direct to state 2 
+              END_IF                                          		  
+	        END_IF
+		  1: // wait for reach low limit then trigger fbHomeToSwitch
+		    bHomed:=FALSE;
+			bSequenceReady:=FALSE;
+			fbMoveVelocity.Velocity:=ABS(fbHomePrepare.fVelocityToCam);
+            fbMoveVelocity.Direction:=MC_Negative_Direction;
+	        bExecuteMoveVelocity:=bExecute;  // Execute MC_MoveVelocity
+		    IF NOT bLimitBwd AND NOT fbMoveVelocity.Busy AND Axis.Status.NotMoving THEN //MC_MoveVelocity.Busy goes down when ramp down initiates (not ends).
+			  nHomingState:=2;
+		    END_IF
+		  2: // Wait for fbHomeToSwitch
+		    bHomed:=FALSE;
+		    bSequenceReady:=FALSE;
+            bExecuteMoveVelocity:=FALSE;			
+            bExecuteHomeToSwitch:=TRUE;	
+            fbHomeToSwitch.nSearchDirTwoardsCam:=MC_Positive_Direction;
+            fbHomeToSwitch.nSearchDirOffCam:=MC_Positive_Direction;	             
+	        fbHomeToSwitch.fVelocityToCamNC:=fbHomePrepare.fVelocityToCam; // High speed
+  	        fbHomeToSwitch.fVelocityFromCamNC:=fbHomePrepare.fVelocityFromCam;  // Low speed              		
+		    fbHomeToSwitch.bCamSensor:=NOT bLimitBwd;            	 		    
+	        IF fbHomeToSwitch.bDone THEN	          
+			  nHomingState:=3;
+			  bExecuteFinish:=TRUE;
+			  fbHomeFinish.bSofLimEnableHigh:=fbHomePrepare.bSofLimEnableHighOriginal;
+			  fbHomeFinish.bSofLimEnableLow:=fbHomePrepare.bSofLimEnableLowOriginal;
+	        END_IF;	
+          3: // restore softlimit enable
+            bHomed:=FALSE;
+		    bSequenceReady:=FALSE;            		            	
+	        IF fbHomeFinish.bDone THEN
+			  bRestoreNCDataNeeded:=FALSE;
+	          bSequenceReady:=TRUE;
+			  nHomingState:=0;
+			  bHomed:=Axis.Status.Homed;
+	        END_IF;	 
+	   END_CASE;
+	   
+   2: // Home to high limit switch
+	   CASE nHomingState OF
+		  0:
+		    bHomed:=Axis.Status.Homed;
+            // Wait for read of velocities from NC and reset of calibration flag
+	        IF fbHomePrepare.bDone AND bExecute AND NOT bSequenceReady THEN
+			  bRestoreNCDataNeeded:=TRUE;
+			  IF bLimitFwd THEN
+                nHomingState:=1;
+              ELSE
+				nHomingState:=2;  //Standing on limit switch go direct to state 2 
+              END_IF                                          		  
+	        END_IF
+		  1: // wait for reach low limit then trigger fbHomeToSwitch
+		    bHomed:=FALSE;
+			bSequenceReady:=FALSE;
+			fbMoveVelocity.Velocity:=ABS(fbHomePrepare.fVelocityToCam);
+            fbMoveVelocity.Direction:=MC_Positive_Direction;
+	        bExecuteMoveVelocity:=bExecute;  // Execute MC_MoveVelocity
+		    IF NOT bLimitFwd AND NOT fbMoveVelocity.Busy AND Axis.Status.NotMoving THEN //MC_MoveVelocity.Busy goes down when ramp down initiates (not ends).
+			  nHomingState:=2;
+		    END_IF
+		  2: // Wait for fbHomeToSwitch
+		    bHomed:=FALSE;
+		    bSequenceReady:=FALSE;
+            bExecuteMoveVelocity:=FALSE;			
+            bExecuteHomeToSwitch:=TRUE;	
+            fbHomeToSwitch.nSearchDirTwoardsCam:=MC_Negative_Direction;
+            fbHomeToSwitch.nSearchDirOffCam:=MC_Negative_Direction;	             
+	        fbHomeToSwitch.fVelocityToCamNC:=fbHomePrepare.fVelocityToCam; // High speed
+  	        fbHomeToSwitch.fVelocityFromCamNC:=fbHomePrepare.fVelocityFromCam;  // Low speed              		
+		    fbHomeToSwitch.bCamSensor:=NOT bLimitFwd;            	 		    
+	        IF fbHomeToSwitch.bDone THEN	          
+			  nHomingState:=3;
+			  bExecuteFinish:=TRUE;
+			  fbHomeFinish.bSofLimEnableHigh:=fbHomePrepare.bSofLimEnableHighOriginal;
+			  fbHomeFinish.bSofLimEnableLow:=fbHomePrepare.bSofLimEnableLowOriginal;
+	        END_IF;	
+          3: // restore softlimit enable
+            bHomed:=FALSE;
+		    bSequenceReady:=FALSE;            		            	
+	        IF fbHomeFinish.bDone THEN
+			  bRestoreNCDataNeeded:=FALSE;
+	          bSequenceReady:=TRUE;
+			  nHomingState:=0;
+			  bHomed:=Axis.Status.Homed;
+	        END_IF;	 
+	   END_CASE;
+	   
+   3: // Home on bHomeSensor via bLimitBwd
+   	   CASE nHomingState OF
+		  0:
+		    bHomed:=Axis.Status.Homed;
+            // Wait for read of velocities from NC and reset of calibration flag
+	        IF fbHomePrepare.bDone AND bExecute AND NOT bSequenceReady THEN
+			  bRestoreNCDataNeeded:=TRUE;
+			  IF bLimitBwd THEN
+                nHomingState:=1;
+              ELSE
+				nHomingState:=2;  //Standing on limit switch go direct to state 2 
+              END_IF                                          		  
+	        END_IF
+		  1: // wait for reach low limit then trigger fbHomeToSwitch
+		    bHomed:=FALSE;
+			bSequenceReady:=FALSE;
+			fbMoveVelocity.Velocity:=ABS(fbHomePrepare.fVelocityToCam);
+            fbMoveVelocity.Direction:=MC_Negative_Direction;
+	        bExecuteMoveVelocity:=bExecute;  // Execute MC_MoveVelocity
+		    IF NOT bLimitBwd AND NOT fbMoveVelocity.Busy AND Axis.Status.NotMoving THEN //MC_MoveVelocity.Busy goes down when ramp down initiates (not ends).
+			  nHomingState:=2;
+		    END_IF
+		  2: // Wait for fbHomeToSwitch
+		    bHomed:=FALSE;
+		    bSequenceReady:=FALSE;
+            bExecuteMoveVelocity:=FALSE;			
+            bExecuteHomeToSwitch:=TRUE;	
+            fbHomeToSwitch.nSearchDirTwoardsCam:=MC_Positive_Direction;
+            fbHomeToSwitch.nSearchDirOffCam:=MC_Positive_Direction;	             
+	        fbHomeToSwitch.fVelocityToCamNC:=fbHomePrepare.fVelocityToCam; // High speed
+  	        fbHomeToSwitch.fVelocityFromCamNC:=fbHomePrepare.fVelocityFromCam;  // Low speed              		
+		    fbHomeToSwitch.bCamSensor:=bHomeSensor;            	 		    
+	        IF fbHomeToSwitch.bDone THEN	          
+			  nHomingState:=3;
+			  bExecuteFinish:=TRUE;
+			  fbHomeFinish.bSofLimEnableHigh:=fbHomePrepare.bSofLimEnableHighOriginal;
+			  fbHomeFinish.bSofLimEnableLow:=fbHomePrepare.bSofLimEnableLowOriginal;
+	        END_IF;	
+          3: // restore softlimit enable
+            bHomed:=FALSE;
+		    bSequenceReady:=FALSE;            		            	
+	        IF fbHomeFinish.bDone THEN
+		      bRestoreNCDataNeeded:=FALSE;
+	          bSequenceReady:=TRUE;
+			  nHomingState:=0;
+			  bHomed:=Axis.Status.Homed;
+	        END_IF;	 
+	   END_CASE;
+	4:  // Home on bHomeSensor via bLimitFwd	   
+	   CASE nHomingState OF
+		  0:
+		    bHomed:=Axis.Status.Homed;
+            // Wait for read of velocities from NC and reset of calibration flag
+	        IF fbHomePrepare.bDone AND bExecute AND NOT bSequenceReady THEN
+			  bRestoreNCDataNeeded:=TRUE;
+			  IF bLimitFwd THEN
+                nHomingState:=1;
+              ELSE
+				nHomingState:=2;  //Standing on limit switch go direct to state 2 
+              END_IF                                          		  
+	        END_IF
+		  1: // wait for reach low limit then trigger fbHomeToSwitch
+		    bHomed:=FALSE;
+			bSequenceReady:=FALSE;
+			fbMoveVelocity.Velocity:=ABS(fbHomePrepare.fVelocityToCam);
+            fbMoveVelocity.Direction:=MC_Positive_Direction;
+	        bExecuteMoveVelocity:=bExecute;  // Execute MC_MoveVelocity
+		    IF NOT bLimitFwd AND NOT fbMoveVelocity.Busy AND Axis.Status.NotMoving THEN //MC_MoveVelocity.Busy goes down when ramp down initiates (not ends).
+			  nHomingState:=2;
+		    END_IF
+		  2: // Wait for fbHomeToSwitch
+		    bHomed:=FALSE;
+		    bSequenceReady:=FALSE;
+            bExecuteMoveVelocity:=FALSE;			
+            bExecuteHomeToSwitch:=TRUE;	
+            fbHomeToSwitch.nSearchDirTwoardsCam:=MC_Negative_Direction;
+            fbHomeToSwitch.nSearchDirOffCam:=MC_Negative_Direction;	             
+	        fbHomeToSwitch.fVelocityToCamNC:=fbHomePrepare.fVelocityToCam; // High speed
+  	        fbHomeToSwitch.fVelocityFromCamNC:=fbHomePrepare.fVelocityFromCam;  // Low speed              		
+		    fbHomeToSwitch.bCamSensor:=bHomeSensor;            	 		    
+	        IF fbHomeToSwitch.bDone THEN	          
+			  nHomingState:=3;
+			  bExecuteFinish:=TRUE;
+			  fbHomeFinish.bSofLimEnableHigh:=fbHomePrepare.bSofLimEnableHighOriginal;
+			  fbHomeFinish.bSofLimEnableLow:=fbHomePrepare.bSofLimEnableLowOriginal;
+	        END_IF;	
+          3: // Restore softlimit enable
+            bHomed:=FALSE;
+		    bSequenceReady:=FALSE;            		            	
+	        IF fbHomeFinish.bDone THEN
+			  bRestoreNCDataNeeded:=FALSE;
+	          bSequenceReady:=TRUE;
+			  nHomingState:=0;
+			  bHomed:=Axis.Status.Homed;
+	        END_IF;	 
+	   END_CASE;
+		  	    
+   15: //Set current position (simplest homing sequence)
+     bExecuteHomeDirect:=bExecute;
+	 bHomed:=Axis.Status.Homed;
+     IF fbHomeDirect.bDone THEN  //Homing ready				
+	   bExecuteHomeDirect:=FALSE;				
+       bSequenceReady:=TRUE;	
+     END_IF	 
+	 
+ELSE
+  fbHomeToSwitch.bCamSensor:=FALSE;
+  bHomed:=Axis.Status.Homed;
+END_CASE;
+
+// Main homing block
+fbHomeToSwitch(
+	bExecute:=bExecuteHomeToSwitch AND bExecute AND NOT bError AND NOT bExecuteHomeDirect AND NOT bExecuteMoveVelocity,
+ 	bReset:=bReset,
+	fHomePosition:=fHomePosition,
+	Axis:=Axis
+);
+
+// Approach limit switch (error if MC_Home is used)
+fbMoveVelocity(
+    Execute:= bExecuteMoveVelocity AND bExecute AND NOT bError AND NOT bExecuteHomeToSwitch AND NOT bExecuteHomeDirect,
+    Axis:=Axis
+);
+
+// No sequence, just set position value (nCmdDataLocal=15). Can not run if fbHomeToSwitch is executed
+fbHomeDirect(
+	bExecute:=bExecuteHomeDirect AND bExecute AND NOT bError  AND NOT bExecuteHomeToSwitch AND NOT bExecuteMoveVelocity,
+ 	bReset:=bReset,
+	fHomePosition:=fHomePosition,
+	Axis:=Axis
+);
+
+ 
+//############# Finish homing
+
+IF NOT bexecute AND bRestoreNCDataNeeded THEN  //If homing is aborted restore is needed
+	bExecuteFinish:=TRUE;
+	IF fbHomeFinish.bDone THEN
+	  bExecuteFinish:=FALSE;
+      bRestoreNCDataNeeded:=FALSE;	
+	END_IF
+END_IF
+
+fbHomeFinish(
+  En:=En,
+  bExecute:=bExecuteFinish,
+  bReset:=bReset,
+  Axis:=Axis,
+);
+
+// Error handling
+IF NOT bError THEN
+  IF fbHomeToSwitch.bError THEN 
+	bError:=fbHomeToSwitch.bError;
+	nErrorId:=fbHomeToSwitch.nErrorId;
+  ELSIF fbHomeDirect.bError THEN
+	bError:=fbHomeDirect.bError;
+	nErrorId:=fbHomeDirect.nErrorId;
+  ELSIF fbMoveVelocity.Error THEN
+	bError:=fbMoveVelocity.Error;
+	nErrorId:=fbMoveVelocity.ErrorId;    		    		
+  END_IF;	
+END_IF
+
+// Done and busy bit
+bDone:=bSequenceReady AND bExecute;
+bBusy:=NOT bSequenceReady;	 
+
+RETURN;]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HomeVirtual">
+      <LineId Id="9" Count="0" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="179" Count="0" />
+      <LineId Id="181" Count="1" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="505" Count="3" />
+      <LineId Id="573" Count="0" />
+      <LineId Id="665" Count="1" />
+      <LineId Id="1157" Count="0" />
+      <LineId Id="1172" Count="0" />
+      <LineId Id="1288" Count="0" />
+      <LineId Id="509" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="675" Count="0" />
+      <LineId Id="549" Count="0" />
+      <LineId Id="460" Count="0" />
+      <LineId Id="1533" Count="0" />
+      <LineId Id="646" Count="0" />
+      <LineId Id="648" Count="0" />
+      <LineId Id="647" Count="0" />
+      <LineId Id="651" Count="4" />
+      <LineId Id="658" Count="1" />
+      <LineId Id="650" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="1274" Count="0" />
+      <LineId Id="485" Count="0" />
+      <LineId Id="427" Count="0" />
+      <LineId Id="445" Count="0" />
+      <LineId Id="440" Count="2" />
+      <LineId Id="439" Count="0" />
+      <LineId Id="1258" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="431" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="732" Count="1" />
+      <LineId Id="738" Count="2" />
+      <LineId Id="1536" Count="0" />
+      <LineId Id="1000" Count="3" />
+      <LineId Id="999" Count="0" />
+      <LineId Id="742" Count="0" />
+      <LineId Id="748" Count="0" />
+      <LineId Id="862" Count="0" />
+      <LineId Id="869" Count="0" />
+      <LineId Id="867" Count="1" />
+      <LineId Id="866" Count="0" />
+      <LineId Id="757" Count="3" />
+      <LineId Id="883" Count="1" />
+      <LineId Id="876" Count="3" />
+      <LineId Id="881" Count="1" />
+      <LineId Id="779" Count="0" />
+      <LineId Id="743" Count="0" />
+      <LineId Id="770" Count="0" />
+      <LineId Id="1290" Count="0" />
+      <LineId Id="1294" Count="0" />
+      <LineId Id="1296" Count="0" />
+      <LineId Id="737" Count="0" />
+      <LineId Id="1275" Count="0" />
+      <LineId Id="1283" Count="1" />
+      <LineId Id="1278" Count="0" />
+      <LineId Id="1548" Count="0" />
+      <LineId Id="1279" Count="3" />
+      <LineId Id="734" Count="0" />
+      <LineId Id="1352" Count="0" />
+      <LineId Id="1306" Count="5" />
+      <LineId Id="1537" Count="0" />
+      <LineId Id="1353" Count="0" />
+      <LineId Id="1313" Count="33" />
+      <LineId Id="1547" Count="0" />
+      <LineId Id="1347" Count="3" />
+      <LineId Id="735" Count="0" />
+      <LineId Id="1355" Count="0" />
+      <LineId Id="1357" Count="0" />
+      <LineId Id="1440" Count="4" />
+      <LineId Id="1538" Count="0" />
+      <LineId Id="1445" Count="34" />
+      <LineId Id="1549" Count="0" />
+      <LineId Id="1480" Count="3" />
+      <LineId Id="1356" Count="0" />
+      <LineId Id="1530" Count="0" />
+      <LineId Id="1485" Count="4" />
+      <LineId Id="1539" Count="0" />
+      <LineId Id="1490" Count="34" />
+      <LineId Id="1550" Count="0" />
+      <LineId Id="1525" Count="3" />
+      <LineId Id="1484" Count="0" />
+      <LineId Id="1351" Count="0" />
+      <LineId Id="602" Count="0" />
+      <LineId Id="605" Count="0" />
+      <LineId Id="623" Count="0" />
+      <LineId Id="618" Count="0" />
+      <LineId Id="620" Count="0" />
+      <LineId Id="622" Count="0" />
+      <LineId Id="604" Count="0" />
+      <LineId Id="645" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="251" Count="0" />
+      <LineId Id="477" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="673" Count="0" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="151" Count="4" />
+      <LineId Id="1214" Count="0" />
+      <LineId Id="1160" Count="0" />
+      <LineId Id="720" Count="0" />
+      <LineId Id="722" Count="0" />
+      <LineId Id="726" Count="0" />
+      <LineId Id="721" Count="0" />
+      <LineId Id="667" Count="0" />
+      <LineId Id="609" Count="0" />
+      <LineId Id="608" Count="0" />
+      <LineId Id="611" Count="2" />
+      <LineId Id="610" Count="0" />
+      <LineId Id="614" Count="0" />
+      <LineId Id="1540" Count="0" />
+      <LineId Id="1354" Count="0" />
+      <LineId Id="1298" Count="0" />
+      <LineId Id="1558" Count="0" />
+      <LineId Id="1542" Count="0" />
+      <LineId Id="1551" Count="0" />
+      <LineId Id="1553" Count="1" />
+      <LineId Id="1556" Count="0" />
+      <LineId Id="1555" Count="0" />
+      <LineId Id="1552" Count="0" />
+      <LineId Id="1557" Count="0" />
+      <LineId Id="1297" Count="0" />
+      <LineId Id="1302" Count="2" />
+      <LineId Id="1301" Count="0" />
+      <LineId Id="1305" Count="0" />
+      <LineId Id="1300" Count="0" />
+      <LineId Id="171" Count="1" />
+      <LineId Id="524" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="642" Count="2" />
+      <LineId Id="776" Count="2" />
+      <LineId Id="522" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="538" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="540" Count="1" />
+      <LineId Id="670" Count="0" />
+      <LineId Id="539" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

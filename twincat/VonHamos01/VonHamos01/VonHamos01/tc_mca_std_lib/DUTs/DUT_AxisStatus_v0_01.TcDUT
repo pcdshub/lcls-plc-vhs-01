@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="DUT_AxisStatus_v0_01" Id="{733a7fe4-dbcb-4ec1-a811-44ba922350b6}">
+    <Declaration><![CDATA[TYPE DUT_AxisStatus_v0_01 :
+STRUCT
+	bEnable: BOOL;
+	bReset: BOOL;
+	bExecute: BOOL;
+	nCommand: UINT;
+	nCmdData: UINT;
+	fVelocity: LREAL;
+	fPosition: LREAL;
+	fAcceleration: LREAL;
+	fDeceleration: LREAL;
+	bJogFwd: BOOL;
+	bJogBwd: BOOL;
+	bLimitFwd: BOOL;
+	bLimitBwd: BOOL;
+	fOverride: LREAL := 100;
+	bHomeSensor: BOOL;
+	bEnabled: BOOL;
+	bError: BOOL;
+	nErrorId: UDINT;
+	fActVelocity: LREAL;
+	fActPosition: LREAL;
+	fActDiff: LREAL;
+	bHomed:BOOL;
+	bBusy:BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_HomeWriteSoftLimEnable" Id="{98a18836-422d-42af-a096-4f12604828b3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HomeWriteSoftLimEnable
+VAR_INPUT
+	En: BOOL;
+	bReset: BOOL;
+    bExecute: BOOL;		
+	bSofLimEnableLow: BOOL:=TRUE;
+	bSofLimEnableHigh: BOOL:=TRUE;
+END_VAR
+VAR_IN_OUT
+	Axis: AXIS_REF;
+END_VAR
+VAR_OUTPUT
+	EnO: BOOL;	
+	bBusy: BOOL;
+	bDone: BOOL;
+	bError: BOOL;
+	nErrorId: UDINT;	
+END_VAR
+VAR
+	fbExecuteRiseEdge: R_TRIG;
+	fbWriteSoftLimEnableLow:FB_WriteParameterInNc_v1_00;
+	fbWriteSoftLimEnableHigh:FB_WriteParameterInNc_v1_00;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[En:=EnO;
+IF bReset THEN
+	bError:=FALSE;
+	nErrorId:=0;
+END_IF 
+
+fbExecuteRiseEdge(CLK:=bExecute);
+
+fbWriteSoftLimEnableLow(
+	bExecute:=bExecute,
+	nDeviceGroup:= 16#5000,
+	nIndexOffset:= 16#B,
+	nData:=BOOL_TO_DWORD(bSofLimEnableLow),
+	Axis:= Axis);
+	
+fbWriteSoftLimEnableHigh(
+	bExecute:=bExecute,
+	nDeviceGroup:= 16#5000,
+	nIndexOffset:= 16#C,
+	nData:=BOOL_TO_DWORD(bSofLimEnableHigh),
+	Axis:= Axis);
+
+bBusy:=fbWriteSoftLimEnableLow.bBusy OR fbWriteSoftLimEnableHigh.bBusy;
+bDone:=fbWriteSoftLimEnableLow.bDone AND fbWriteSoftLimEnableHigh.bDone AND bExecute;
+
+bError:=fbWriteSoftLimEnableHigh.bError OR fbWriteSoftLimEnableLow.bError;
+IF fbWriteSoftLimEnableHigh.bError THEN
+  nErrorId:=fbWriteSoftLimEnableHigh.nErrorId;
+ELSIF fbWriteSoftLimEnableLow.bError THEN
+  nErrorId:=fbWriteSoftLimEnableLow.nErrorId;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HomeWriteSoftLimEnable">
+      <LineId Id="9" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="143" Count="1" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="382" Count="0" />
+      <LineId Id="380" Count="0" />
+      <LineId Id="328" Count="0" />
+      <LineId Id="330" Count="3" />
+      <LineId Id="363" Count="0" />
+      <LineId Id="329" Count="0" />
+      <LineId Id="344" Count="0" />
+      <LineId Id="346" Count="3" />
+      <LineId Id="366" Count="0" />
+      <LineId Id="345" Count="0" />
+      <LineId Id="360" Count="0" />
+      <LineId Id="326" Count="1" />
+      <LineId Id="355" Count="0" />
+      <LineId Id="351" Count="0" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="353" Count="0" />
+      <LineId Id="356" Count="1" />
+      <LineId Id="354" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
