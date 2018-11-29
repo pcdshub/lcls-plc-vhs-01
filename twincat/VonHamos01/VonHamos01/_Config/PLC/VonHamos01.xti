@@ -2430,9 +2430,57 @@ External Setpoint Generation:
 	</Project>
 	<Mappings>
 		<OwnerA Name="VonHamos01 Instance">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 10 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM8" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM8" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 11 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM9" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM9" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 12 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM10" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM10" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 13 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM11" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM11" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 14 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM12" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM12" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 15 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM13" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM13" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL7031)">
 				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM1" VarB="STM Status^Status^Digital input 2"/>
 				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM1" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 4 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM2" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM2" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 5 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM3" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM3" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 6 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM4" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM4" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 7 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM5" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM5" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 8 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM6" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM6" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 9 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM7" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM7" VarB="STM Status^Status^Digital input 1"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 				<Link VarA="PlcTask Inputs^MOTION_FB.M1Link.Axis.NcToPlc" VarB="Outputs^ToPlc"/>
