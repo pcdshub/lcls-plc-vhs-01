@@ -7,9 +7,67 @@ VAR
 	M1Link: FB_NcAxis;
 	bLimitFwdM1 AT %I*: BOOL;
 	bLimitBwdM1 AT %I*: BOOL;
-	bHomeSensorM1 AT %I*: BOOL;
-END_VAR
-]]></Declaration>
+	
+	M2: FB_DriveVirtual;
+	M2Link: FB_NcAxis;
+	bLimitFwdM2 AT %I*: BOOL;
+	bLimitBwdM2 AT %I*: BOOL;
+
+	M3: FB_DriveVirtual;
+	M3Link: FB_NcAxis;
+	bLimitFwdM3 AT %I*: BOOL;
+	bLimitBwdM3 AT %I*: BOOL;
+
+	M4: FB_DriveVirtual;
+	M4Link: FB_NcAxis;
+	bLimitFwdM4 AT %I*: BOOL;
+	bLimitBwdM4 AT %I*: BOOL;
+
+	M5: FB_DriveVirtual;
+	M5Link: FB_NcAxis;
+	bLimitFwdM5 AT %I*: BOOL;
+	bLimitBwdM5 AT %I*: BOOL;
+
+	M6: FB_DriveVirtual;
+	M6Link: FB_NcAxis;
+	bLimitFwdM6 AT %I*: BOOL;
+	bLimitBwdM6 AT %I*: BOOL;
+
+	M7: FB_DriveVirtual;
+	M7Link: FB_NcAxis;
+	bLimitFwdM7 AT %I*: BOOL;
+	bLimitBwdM7 AT %I*: BOOL;
+
+	M8: FB_DriveVirtual;
+	M8Link: FB_NcAxis;
+	bLimitFwdM8 AT %I*: BOOL;
+	bLimitBwdM8 AT %I*: BOOL;
+
+	M9: FB_DriveVirtual;
+	M9Link: FB_NcAxis;
+	bLimitFwdM9 AT %I*: BOOL;
+	bLimitBwdM9 AT %I*: BOOL;
+
+	M10: FB_DriveVirtual;
+	M10Link: FB_NcAxis;
+	bLimitFwdM10 AT %I*: BOOL;
+	bLimitBwdM10 AT %I*: BOOL;
+
+	M11: FB_DriveVirtual;
+	M11Link: FB_NcAxis;
+	bLimitFwdM11 AT %I*: BOOL;
+	bLimitBwdM11 AT %I*: BOOL;
+
+	M12: FB_DriveVirtual;
+	M12Link: FB_NcAxis;
+	bLimitFwdM12 AT %I*: BOOL;
+	bLimitBwdM12 AT %I*: BOOL;
+
+	M13: FB_DriveVirtual;
+	M13Link: FB_NcAxis;
+	bLimitFwdM13 AT %I*: BOOL;
+	bLimitBwdM13 AT %I*: BOOL;
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[M1Link(En := TRUE);
 M1(En := TRUE,
@@ -17,13 +75,97 @@ M1(En := TRUE,
    bLimitFwd := bLimitFwdM1,
    bLimitBwd := bLimitBwdM1,
    Axis := M1Link.axis);
-   ]]></ST>
+
+M2Link(En := TRUE);
+M2(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM2,
+   bLimitBwd := bLimitBwdM2,
+   Axis := M2Link.axis);
+
+M3Link(En := TRUE);
+M3(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM3,
+   bLimitBwd := bLimitBwdM3,
+   Axis := M3Link.axis);
+
+M4Link(En := TRUE);
+M4(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM4,
+   bLimitBwd := bLimitBwdM4,
+   Axis := M4Link.axis);
+
+M5Link(En := TRUE);
+M5(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM5,
+   bLimitBwd := bLimitBwdM5,
+   Axis := M5Link.axis);
+
+M6Link(En := TRUE);
+M6(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM6,
+   bLimitBwd := bLimitBwdM6,
+   Axis := M6Link.axis);
+
+M7Link(En := TRUE);
+M7(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM7,
+   bLimitBwd := bLimitBwdM7,
+   Axis := M7Link.axis);
+
+M8Link(En := TRUE);
+M8(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM8,
+   bLimitBwd := bLimitBwdM8,
+   Axis := M8Link.axis);
+
+M9Link(En := TRUE);
+M9(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM9,
+   bLimitBwd := bLimitBwdM9,
+   Axis := M9Link.axis);
+
+M10Link(En := TRUE);
+M10(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM10,
+   bLimitBwd := bLimitBwdM10,
+   Axis := M10Link.axis);
+
+M11Link(En := TRUE);
+M11(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM11,
+   bLimitBwd := bLimitBwdM11,
+   Axis := M11Link.axis);
+
+M12Link(En := TRUE);
+M12(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM12,
+   bLimitBwd := bLimitBwdM12,
+   Axis := M12Link.axis);
+
+M13Link(En := TRUE);
+M13(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM13,
+   bLimitBwd := bLimitBwdM13,
+   Axis := M13Link.axis);]]></ST>
     </Implementation>
     <LineIds Name="MOTION_FB">
       <LineId Id="16" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="17" Count="2" />
       <LineId Id="30" Count="0" />
+      <LineId Id="100" Count="82" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
