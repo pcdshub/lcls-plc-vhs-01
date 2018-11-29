@@ -1018,6 +1018,10 @@ External Setpoint Generation:
 	</Project>
 	<Mappings>
 		<OwnerA Name="VonHamos01 Instance">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL7031)">
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitBwdM1" VarB="STM Status^Status^Digital input 2"/>
+				<Link VarA="PlcTask Inputs^MOTION_FB.bLimitFwdM1" VarB="STM Status^Status^Digital input 1"/>
+			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 				<Link VarA="PlcTask Inputs^MOTION_FB.M1Link.Axis.NcToPlc" VarB="Outputs^ToPlc"/>
 				<Link VarA="PlcTask Outputs^MOTION_FB.M1Link.Axis.PlcToNc" VarB="Inputs^FromPlc"/>
