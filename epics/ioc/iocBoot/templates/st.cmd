@@ -18,8 +18,35 @@ dbLoadDatabase("dbd/ads.dbd")
 ads_registerRecordDeviceDriver(pdbbase)
 
 ## LOAD STUFF HERE!!!  DRIVERS FIRST, THEN RECORDS!
+## connect to TwinCAT runtime
+adsAsynPortDriverConfigure("A","$$PLC","$$AMSID",851,1000,0,0,500,1000,1000,0)
+##
+## debuging
+asynReport(2,"A")
+#asynSetTraceMask("A",-1,0xFF)
+
+####
+##############################################################################
+############# Configure and load axis record:
+EthercatMCCreateController("MCU", "A", "32", "200", "1000", "")
+
+epicsEnvSet("MOTOR_PORT",    "MCU")
+epicsEnvSet("ASYN_PORT",     "MC_CPU")
+epicsEnvSet("PREFIX",        "$$PREFIX")
+
+$$LOOP(MOTOR)
+EthercatMCCreateAxis("$(MOTOR_PORT)", "$$AXIS", "6", "")
+dbLoadRecords("db/EthercatMC.template", "PREFIX=$(PREFIX), MOTOR_NAME=$$NAME, R=$$NAME, MOTOR_PORT=$(MOTOR_PORT), ASYN_PORT=$(ASYN_PORT), AXIS_NO=$$AXIS")
+$$ENDLOOP(MOTOR)
+
+##############################################################################
+
+## Load records
 dbLoadRecords("db/iocSoft.db", "IOC=$(IOC_PV)")
 dbLoadRecords("db/save_restoreStatus.db", "IOC=$(IOC_PV)")
+
+## debuging
+asynReport(2,"A")
 
 # Setup autosave
 set_savefile_path( "$(IOC_DATA)/$(IOC)/autosave" )
