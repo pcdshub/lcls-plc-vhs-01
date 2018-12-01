@@ -1,3 +1,4 @@
+# Twincat ignores
 _Boot
 _Libraries
 _CompileInfo
@@ -7,3 +8,12 @@ _CompileInfo
 *.tpy
 *.bak
 *.~u
+
+# EPICS ignores
+O.*
+archive
+autosave
+bin
+build
+db
+dbd
