@@ -19,6 +19,8 @@ DB += adsGeneral.db
 ARCHIVE += archive_ads.archive
 REQ += autosave_ads.req
 
+DB_INSTALLS += $(AXIS)/db/EthercatMC.template
+
 DB_INSTALLS += $(IOCADMIN)/db/iocSoft.db
 DB_INSTALLS += $(AUTOSAVE)/db/save_restoreStatus.db
 DB_INSTALLS += $(ASYN)/db/asynRecord.db
