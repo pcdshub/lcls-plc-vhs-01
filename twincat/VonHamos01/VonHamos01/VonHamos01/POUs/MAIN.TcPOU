@@ -1,16 +1,167 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="MAIN" Id="{57a921db-ef5b-4e7a-9f5a-c29fdfc2cb69}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM MAIN
+  <POU Name="Main" Id="{57a921db-ef5b-4e7a-9f5a-c29fdfc2cb69}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Main
 VAR
-END_VAR
-]]></Declaration>
+	M1: FB_DriveVirtual;
+	M1Link: FB_NcAxis;
+	bLimitFwdM1 AT %I*: BOOL;
+	bLimitBwdM1 AT %I*: BOOL;
+	
+	M2: FB_DriveVirtual;
+	M2Link: FB_NcAxis;
+	bLimitFwdM2 AT %I*: BOOL;
+	bLimitBwdM2 AT %I*: BOOL;
+
+	M3: FB_DriveVirtual;
+	M3Link: FB_NcAxis;
+	bLimitFwdM3 AT %I*: BOOL;
+	bLimitBwdM3 AT %I*: BOOL;
+
+	M4: FB_DriveVirtual;
+	M4Link: FB_NcAxis;
+	bLimitFwdM4 AT %I*: BOOL;
+	bLimitBwdM4 AT %I*: BOOL;
+
+	M5: FB_DriveVirtual;
+	M5Link: FB_NcAxis;
+	bLimitFwdM5 AT %I*: BOOL;
+	bLimitBwdM5 AT %I*: BOOL;
+
+	M6: FB_DriveVirtual;
+	M6Link: FB_NcAxis;
+	bLimitFwdM6 AT %I*: BOOL;
+	bLimitBwdM6 AT %I*: BOOL;
+
+	M7: FB_DriveVirtual;
+	M7Link: FB_NcAxis;
+	bLimitFwdM7 AT %I*: BOOL;
+	bLimitBwdM7 AT %I*: BOOL;
+
+	M8: FB_DriveVirtual;
+	M8Link: FB_NcAxis;
+	bLimitFwdM8 AT %I*: BOOL;
+	bLimitBwdM8 AT %I*: BOOL;
+
+	M9: FB_DriveVirtual;
+	M9Link: FB_NcAxis;
+	bLimitFwdM9 AT %I*: BOOL;
+	bLimitBwdM9 AT %I*: BOOL;
+
+	M10: FB_DriveVirtual;
+	M10Link: FB_NcAxis;
+	bLimitFwdM10 AT %I*: BOOL;
+	bLimitBwdM10 AT %I*: BOOL;
+
+	M11: FB_DriveVirtual;
+	M11Link: FB_NcAxis;
+	bLimitFwdM11 AT %I*: BOOL;
+	bLimitBwdM11 AT %I*: BOOL;
+
+	M12: FB_DriveVirtual;
+	M12Link: FB_NcAxis;
+	bLimitFwdM12 AT %I*: BOOL;
+	bLimitBwdM12 AT %I*: BOOL;
+
+	M13: FB_DriveVirtual;
+	M13Link: FB_NcAxis;
+	bLimitFwdM13 AT %I*: BOOL;
+	bLimitBwdM13 AT %I*: BOOL;
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Handle axes
-MOTION_FB();]]></ST>
+      <ST><![CDATA[M1Link(En := TRUE);
+M1(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := bLimitFwdM1,
+   bLimitBwd := bLimitBwdM1,
+   Axis := M1Link.axis);
+
+M2Link(En := TRUE);
+M2(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM2,
+   bLimitBwd := TRUE, // bLimitBwdM2,
+   Axis := M2Link.axis);
+
+M3Link(En := TRUE);
+M3(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM3,
+   bLimitBwd := TRUE, // bLimitBwdM3,
+   Axis := M3Link.axis);
+
+M4Link(En := TRUE);
+M4(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM4,
+   bLimitBwd := TRUE, // bLimitBwdM4,
+   Axis := M4Link.axis);
+
+M5Link(En := TRUE);
+M5(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM5,
+   bLimitBwd := TRUE, // bLimitBwdM5,
+   Axis := M5Link.axis);
+
+M6Link(En := TRUE);
+M6(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM6,
+   bLimitBwd := TRUE, // bLimitBwdM6,
+   Axis := M6Link.axis);
+
+M7Link(En := TRUE);
+M7(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM7,
+   bLimitBwd := TRUE, // bLimitBwdM7,
+   Axis := M7Link.axis);
+
+M8Link(En := TRUE);
+M8(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM8,
+   bLimitBwd := TRUE, // bLimitBwdM8,
+   Axis := M8Link.axis);
+
+M9Link(En := TRUE);
+M9(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM9,
+   bLimitBwd := TRUE, // bLimitBwdM9,
+   Axis := M9Link.axis);
+
+M10Link(En := TRUE);
+M10(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM10,
+   bLimitBwd := TRUE, // bLimitBwdM10,
+   Axis := M10Link.axis);
+
+M11Link(En := TRUE);
+M11(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM11,
+   bLimitBwd := TRUE, // bLimitBwdM11,
+   Axis := M11Link.axis);
+
+M12Link(En := TRUE);
+M12(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM12,
+   bLimitBwd := TRUE, // bLimitBwdM12,
+   Axis := M12Link.axis);
+
+M13Link(En := TRUE);
+M13(En := TRUE,
+   bEnable := TRUE,
+   bLimitFwd := TRUE, // bLimitFwdM13,
+   bLimitBwd := TRUE, // bLimitBwdM13,
+   Axis := M13Link.axis);]]></ST>
     </Implementation>
-    <LineIds Name="MAIN">
-      <LineId Id="7" Count="0" />
+    <LineIds Name="Main">
+      <LineId Id="130" Count="88" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
