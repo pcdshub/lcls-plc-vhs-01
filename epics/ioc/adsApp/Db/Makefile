@@ -18,6 +18,7 @@ include $(TOP)/configure/CONFIG
 DB += adsGeneral.db
 ARCHIVE += archive_ads.archive
 REQ += autosave_ads.req
+REQ += axis_autosave.tpl-req
 
 DB_INSTALLS += $(AXIS)/db/EthercatMC.template
 
