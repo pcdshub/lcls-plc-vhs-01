@@ -4,7 +4,7 @@ major 4
 minor 0
 release 1
 x 209
-y 183
+y 257
 w 400
 h 100
 font "helvetica-medium-r-18.0"
@@ -542,7 +542,7 @@ beginObjectProperties
 major 4
 minor 4
 release 0
-x 340
+x 312
 y 68
 w 48
 h 24
@@ -556,6 +556,9 @@ numPvs 4
 numDsps 1
 displayFileName {
   0 "bk_mot_screens/bkm_main.edl"
+}
+setPosition {
+  0 "button"
 }
 endObjectProperties
 
