@@ -82,6 +82,7 @@ VAR
 	fbGearOut: MC_GearOut;
 	fbExecuteRiseEdge: R_TRIG;
 	stAxisStatus: DUT_AxisStatus_v0_01;	
+	stAxisStatusV2: DUT_AxisStatus_v0_01;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[EnO:=En;
