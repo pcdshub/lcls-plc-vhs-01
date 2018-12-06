@@ -49,7 +49,7 @@ menuLabel {
   0 "cr2_tilt"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):11"
+  0 "MOTOR=$(PREFIX)11"
 }
 noScroll
 endObjectProperties
@@ -79,7 +79,7 @@ menuLabel {
   0 "cr2_rot"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):07"
+  0 "MOTOR=$(PREFIX)07"
 }
 noScroll
 endObjectProperties
@@ -109,7 +109,7 @@ menuLabel {
   0 "cr2_trans"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):03"
+  0 "MOTOR=$(PREFIX)03"
 }
 noScroll
 endObjectProperties
@@ -139,7 +139,7 @@ menuLabel {
   0 "cr1_tilt"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):10"
+  0 "MOTOR=$(PREFIX)10"
 }
 noScroll
 endObjectProperties
@@ -169,7 +169,7 @@ menuLabel {
   0 "common_rot"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):01"
+  0 "MOTOR=$(PREFIX)01"
 }
 noScroll
 endObjectProperties
@@ -219,7 +219,7 @@ menuLabel {
   0 "cr1_rot"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):06"
+  0 "MOTOR=$(PREFIX)06"
 }
 noScroll
 endObjectProperties
@@ -249,7 +249,7 @@ menuLabel {
   0 "cr1_trans"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):02"
+  0 "MOTOR=$(PREFIX)02"
 }
 noScroll
 endObjectProperties
@@ -279,7 +279,7 @@ menuLabel {
   0 "cr4_tilt"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):13"
+  0 "MOTOR=$(PREFIX)13"
 }
 noScroll
 endObjectProperties
@@ -309,7 +309,7 @@ menuLabel {
   0 "cr4_rot"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):09"
+  0 "MOTOR=$(PREFIX)09"
 }
 noScroll
 endObjectProperties
@@ -339,7 +339,7 @@ menuLabel {
   0 "cr4_trans"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):05"
+  0 "MOTOR=$(PREFIX)05"
 }
 noScroll
 endObjectProperties
@@ -369,7 +369,7 @@ menuLabel {
   0 "cr3_tilt"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):12"
+  0 "MOTOR=$(PREFIX)12"
 }
 noScroll
 endObjectProperties
@@ -399,7 +399,7 @@ menuLabel {
   0 "cr3_rot"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):08"
+  0 "MOTOR=$(PREFIX)08"
 }
 noScroll
 endObjectProperties
@@ -429,7 +429,7 @@ menuLabel {
   0 "cr3_trans"
 }
 symbols {
-  0 "MOTOR=$(PREFIX):04"
+  0 "MOTOR=$(PREFIX)04"
 }
 noScroll
 endObjectProperties
