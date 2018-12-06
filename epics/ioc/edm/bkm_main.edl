@@ -3,8 +3,8 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 102
-y 371
+x 865
+y 311
 w 726
 h 554
 font "helvetica-medium-r-18.0"
@@ -2071,7 +2071,6 @@ offLabel "Clear Error"
 3d
 useEnumNumeric
 font "helvetica-medium-r-12.0"
-visPv "$(MOTOR):Err"
 visMin "1"
 visMax "10000000"
 endObjectProperties
