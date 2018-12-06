@@ -94,7 +94,8 @@ IF fbExecuteRiseEdge.Q THEN
   nCommandLocal:=nCommand;
 END_IF
 
-bHomed:=fbHomeVirtual.bHomed; //Add in DUT_AxisStatus later
+// Hack, we can't home these
+bHomed:=TRUE;//fbHomeVirtual.bHomed; //Add in DUT_AxisStatus later
 bDone:=FALSE;
 
 (*Reset*)
@@ -380,7 +381,11 @@ stAxisStatus.nCommand:=nCommand;  //Or nCommandLocal
 stAxisStatus.nErrorId:=nErrorId;
 stAxisStatus.bBusy:=bBusy;
 stAxisStatus.bHomed:=bHomed;
+stAxisStatusV2 := stAxisStatus;
 
+IF bDone THEN
+	bExecute := FALSE;
+END_IF
 IF bFirstScan THEN
 	bFirstScan:=FALSE;
 END_IF]]></ST>
@@ -393,6 +398,7 @@ END_IF]]></ST>
       <LineId Id="4" Count="0" />
       <LineId Id="1154" Count="0" />
       <LineId Id="1148" Count="0" />
+      <LineId Id="1323" Count="0" />
       <LineId Id="1153" Count="0" />
       <LineId Id="5" Count="12" />
       <LineId Id="1029" Count="25" />
@@ -410,7 +416,11 @@ END_IF]]></ST>
       <LineId Id="584" Count="1" />
       <LineId Id="587" Count="38" />
       <LineId Id="944" Count="2" />
-      <LineId Id="696" Count="54" />
+      <LineId Id="696" Count="50" />
+      <LineId Id="1237" Count="0" />
+      <LineId Id="747" Count="0" />
+      <LineId Id="1238" Count="2" />
+      <LineId Id="748" Count="2" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
