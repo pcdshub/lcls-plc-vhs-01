@@ -1,0 +1,465 @@
+
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 50
+y 102
+w 790
+h 900
+font "helvetica-medium-r-18.0"
+ctlFont "helvetica-medium-r-18.0"
+btnFont "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 7
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+showGrid
+gridSize 8
+endScreenProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 6
+y 70
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr2_tilt"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):11"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 6
+y 188
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr2_rot"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):07"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 7
+y 307
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr2_trans"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):03"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 7
+y 425
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr1_tilt"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):10"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 201
+y 779
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "common_rot"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):01"
+}
+noScroll
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 7
+y 13
+w 768
+h 41
+font "helvetica-bold-r-32.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 54
+value {
+  "Von Hamos Beckhoff Motion  "
+}
+border
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 7
+y 543
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr1_rot"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):06"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 7
+y 661
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr1_trans"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):02"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 398
+y 70
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr4_tilt"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):13"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 398
+y 188
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr4_rot"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):09"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 399
+y 307
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr4_trans"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):05"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 399
+y 425
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr3_tilt"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):12"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 399
+y 543
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr3_rot"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):08"
+}
+noScroll
+endObjectProperties
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 399
+y 661
+w 375
+h 100
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+displaySource "menu"
+filePv "LOC\\emb-mms=0"
+sizeOfs 5
+numDsps 1
+displayFileName {
+  0 "bk_mot_screens/emb-mmb-small.edl"
+}
+menuLabel {
+  0 "cr3_trans"
+}
+symbols {
+  0 "MOTOR=$(PREFIX):04"
+}
+noScroll
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 729
+y 21
+w 32
+h 24
+fgColor index 14
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "IOC"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "iocScreens/ioc_soft.edl"
+}
+setPosition {
+  0 "button"
+}
+symbols {
+  0 "IOC=$(IOC)"
+}
+endObjectProperties
+
