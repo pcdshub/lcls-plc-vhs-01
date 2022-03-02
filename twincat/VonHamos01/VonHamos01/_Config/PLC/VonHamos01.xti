@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmItem" TcSmVersion="1.0" TcVersion="3.1.4020.32" ClassName="CNestedPlcProjDef">
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmItem" TcSmVersion="1.0" TcVersion="3.1.4022.22" ClassName="CNestedPlcProjDef">
 	<DataTypes>
 		<DataType>
-			<Name GUID="{4C3FC5AC-D5AA-44C6-AC5A-159774BA0F6D}" Namespace="MC" TcBaseType="true" HideType="true" IecDeclaration="DWORD;">NCTOPLC_AXIS_REF_STATE</Name>
+			<Name GUID="{18071995-0000-0000-0000-000000000041}" TcBaseType="true" HideSubItems="true" CName="AmsNetId">AMSNETID</Name>
+			<BitSize>48</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>6</Elements>
+			</ArrayInfo>
+			<Format>
+				<Printf>%d.%d.%d.%d.%d.%d</Printf>
+				<Parameter>[0]</Parameter>
+				<Parameter>[1]</Parameter>
+				<Parameter>[2]</Parameter>
+				<Parameter>[3]</Parameter>
+				<Parameter>[4]</Parameter>
+				<Parameter>[5]</Parameter>
+			</Format>
+		</DataType>
+		<DataType>
+			<Name GUID="{CBC83B73-B816-4597-A9E5-2B03263CA131}" Namespace="MC" TcBaseType="true" HideType="true" IecDeclaration="DWORD;">NCTOPLC_AXIS_REF_STATE</Name>
 			<BitSize>32</BitSize>
 			<SubItem>
 				<Name>Operational</Name>
@@ -113,6 +131,12 @@
 				<BitOffs>17</BitOffs>
 			</SubItem>
 			<SubItem>
+				<Name>IsDriveLimitActive</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>18</BitOffs>
+			</SubItem>
+			<SubItem>
 				<Name>ContinuousMotion</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
 				<BitSize>1</BitSize>
@@ -199,6 +223,11 @@
 			<Format Name="IEC">
 				<Printf>16#%08X</Printf>
 			</Format>
+			<Relations>
+				<Relation Priority="100">
+					<Type>{4C3FC5AC-D5AA-44C6-AC5A-159774BA0F6D}</Type>
+				</Relation>
+			</Relations>
 		</DataType>
 		<DataType>
 			<Name GUID="{6EF49753-C72C-4F50-AA44-3C7498E76CFE}" Namespace="MC" TcBaseType="true" HideType="true" IecDeclaration="DWORD;">NCTOPLC_AXIS_REF_OPMODE</Name>
@@ -394,11 +423,11 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC" TcBaseType="true">NCTOPLC_AXIS_REF</Name>
+			<Name GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC" TcBaseType="true">NCTOPLC_AXIS_REF</Name>
 			<BitSize>2048</BitSize>
 			<SubItem>
 				<Name>StateDWord</Name>
-				<Type GUID="{4C3FC5AC-D5AA-44C6-AC5A-159774BA0F6D}" Namespace="MC">NCTOPLC_AXIS_REF_STATE</Type>
+				<Type GUID="{CBC83B73-B816-4597-A9E5-2B03263CA131}" Namespace="MC">NCTOPLC_AXIS_REF_STATE</Type>
 				<BitSize>32</BitSize>
 				<BitOffs>0</BitOffs>
 			</SubItem>
@@ -653,6 +682,18 @@ External Setpoint Generation:
 				<BitOffs>1600</BitOffs>
 			</SubItem>
 			<SubItem>
+				<Name>AbsPhasingPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1664</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>TorqueOffset</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1728</BitOffs>
+			</SubItem>
+			<SubItem>
 				<Name>ActPosWithoutPosCorrection</Name>
 				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
 				<BitSize>64</BitSize>
@@ -697,6 +738,9 @@ External Setpoint Generation:
 				</Relation>
 				<Relation Priority="100">
 					<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}"/>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}"/>
 				</Relation>
 			</Relations>
 		</DataType>
@@ -880,11 +924,18 @@ External Setpoint Generation:
 		</DataType>
 	</DataTypes>
 	<Project GUID="{34F1B4C2-D115-482F-970A-84911F6DCA55}" Name="VonHamos01" PrjFilePath="..\..\VonHamos01\VonHamos01.plcproj" TmcFilePath="..\..\VonHamos01\VonHamos01.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
-		<Instance Id="#x01010010" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="VonHamos01\VonHamos01.tmc">
 			<Name>VonHamos01 Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 			<Vars VarGrpType="1">
 				<Name>PlcTask Inputs</Name>
+				<Var>
+					<Name>LCLS_General.DefaultGlobals.stSys.I_EcatMaster1</Name>
+					<Comment>
+						<![CDATA[ AMS Net ID used for FB_EcatDiag, among others ]]>
+					</Comment>
+					<Type GUID="{18071995-0000-0000-0000-000000000041}">AMSNETID</Type>
+				</Var>
 				<Var>
 					<Name>Main.bLimitFwdM1</Name>
 					<Type>BOOL</Type>
@@ -898,8 +949,12 @@ External Setpoint Generation:
 					<Type>BOOL</Type>
 				</Var>
 				<Var>
+					<Name>Main.bLimitBwdM2</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
 					<Name>Main.M1.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -948,7 +1003,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M1Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1001,7 +1056,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M2.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1050,7 +1105,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M2Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1102,40 +1157,8 @@ External Setpoint Generation:
 					<Type>UINT</Type>
 				</Var>
 				<Var>
-					<Name>Main.bLimitBwdM2</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM3</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitBwdM3</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM4</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitBwdM4</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM5</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitBwdM5</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM6</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
 					<Name>Main.M3.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1184,7 +1207,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M3Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1236,8 +1259,40 @@ External Setpoint Generation:
 					<Type>UINT</Type>
 				</Var>
 				<Var>
+					<Name>Main.bLimitFwdM3</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM3</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitFwdM4</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM4</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitFwdM5</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM5</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitFwdM6</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM6</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
 					<Name>Main.M4.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1286,7 +1341,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M4Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1339,7 +1394,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M5.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1388,7 +1443,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M5Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1441,7 +1496,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M6.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1490,7 +1545,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M6Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1542,40 +1597,8 @@ External Setpoint Generation:
 					<Type>UINT</Type>
 				</Var>
 				<Var>
-					<Name>Main.bLimitBwdM6</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM7</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitBwdM7</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM8</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitBwdM8</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM9</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitBwdM9</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM10</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
 					<Name>Main.M7.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1624,7 +1647,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M7Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1676,8 +1699,40 @@ External Setpoint Generation:
 					<Type>UINT</Type>
 				</Var>
 				<Var>
+					<Name>Main.bLimitFwdM7</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM7</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitFwdM8</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM8</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitFwdM9</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM9</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitFwdM10</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM10</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
 					<Name>Main.M8.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1726,7 +1781,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M8Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1779,7 +1834,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M9.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1828,7 +1883,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M9Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1881,7 +1936,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M10.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1930,7 +1985,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M10Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -1982,36 +2037,8 @@ External Setpoint Generation:
 					<Type>UINT</Type>
 				</Var>
 				<Var>
-					<Name>Main.bLimitBwdM10</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM11</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitBwdM11</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM12</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitBwdM12</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitFwdM13</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>Main.bLimitBwdM13</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
 					<Name>Main.M11.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -2060,7 +2087,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M11Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -2112,8 +2139,32 @@ External Setpoint Generation:
 					<Type>UINT</Type>
 				</Var>
 				<Var>
+					<Name>Main.bLimitFwdM11</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM11</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitFwdM12</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM12</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitFwdM13</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Main.bLimitBwdM13</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
 					<Name>Main.M12.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -2162,7 +2213,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M12Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -2215,7 +2266,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M13.MasterAxis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -2264,7 +2315,7 @@ External Setpoint Generation:
 				</Var>
 				<Var>
 					<Name>Main.M13Link.Axis.NcToPlc</Name>
-					<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+					<Type GUID="{72F5AAAA-16DF-4ED3-8367-F6C8C3ADAE99}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 					<SubVar>
 						<Name>AxisState</Name>
 						<Comment>
@@ -2347,6 +2398,18 @@ External Setpoint Generation:
 					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 				</Var>
 				<Var>
+					<Name>Main.M6.MasterAxis.PlcToNc</Name>
+					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+				</Var>
+				<Var>
+					<Name>Main.M7.MasterAxis.PlcToNc</Name>
+					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+				</Var>
+				<Var>
+					<Name>Main.M8.MasterAxis.PlcToNc</Name>
+					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+				</Var>
+				<Var>
 					<Name>Main.M4Link.Axis.PlcToNc</Name>
 					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 				</Var>
@@ -2359,23 +2422,11 @@ External Setpoint Generation:
 					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 				</Var>
 				<Var>
-					<Name>Main.M6.MasterAxis.PlcToNc</Name>
-					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-				</Var>
-				<Var>
 					<Name>Main.M6Link.Axis.PlcToNc</Name>
 					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 				</Var>
 				<Var>
-					<Name>Main.M7.MasterAxis.PlcToNc</Name>
-					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-				</Var>
-				<Var>
 					<Name>Main.M7Link.Axis.PlcToNc</Name>
-					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-				</Var>
-				<Var>
-					<Name>Main.M8.MasterAxis.PlcToNc</Name>
 					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 				</Var>
 				<Var>
@@ -2424,7 +2475,7 @@ External Setpoint Generation:
 				</Var>
 			</Vars>
 			<TaskPouOids>
-				<TaskPouOid Prio="20" OTCID="#x01010011"/>
+				<TaskPouOid Prio="20" OTCID="#x08502001"/>
 			</TaskPouOids>
 		</Instance>
 	</Project>
