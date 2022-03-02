@@ -8,6 +8,7 @@ _CompileInfo
 *.tpy
 *.bak
 *.~u
+TrialLicense.tclrs
 
 # EPICS ignores
 O.*
