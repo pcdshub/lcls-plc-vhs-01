@@ -1,0 +1,21 @@
+
+Pragmas
+-------
+
+.. csv-table::
+    :header: PLC Name, Total Pragmas, Errors
+    :align: center
+
+    :ref:`VonHamos01 <VonHamos01_overview_pragmas>`, 0, 0
+
+
+.. _VonHamos01_overview_pragmas:
+
+
+VonHamos01
+^^^^^^^^^^
+
+Total pragmas found: 0
+Total linter errors: 0
+
+

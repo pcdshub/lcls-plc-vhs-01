@@ -1,0 +1,498 @@
+
+NC Settings
+-----------
+
+.. csv-table::
+    :header: Axis ID, Name
+    :align: center
+
+        1, Axis 1
+        2, Axis 2
+        3, Axis 3
+        4, Axis 4
+        5, Axis 5
+        6, Axis 6
+        7, Axis 7
+        8, Axis 8
+        9, Axis 9
+        10, Axis 10
+        11, Axis 11
+        12, Axis 12
+        13, Axis 13
+
+
+
+Axis 1: Axis 1
+^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 1
+    Name, Axis 1
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 12800
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    General:UnitName, °
+    Id, 1
+    OtherSettings:AllowMotionCmdToSlave, true
+    Velo:FastManual, 3
+    Velo:Maximum, 3
+    Velo:RefSearch, 0.1
+    Velo:RefSync, 0.01
+    Velo:SlowManual, 0.5
+
+
+
+Axis 2: Axis 2
+^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 2
+    Name, Axis 2
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 12800
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    Id, 2
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 4
+    Velo:Maximum, 4
+    Velo:RefSearch, 0.05
+    Velo:RefSync, 0.05
+    Velo:SlowManual, 0.5
+
+
+
+Axis 3: Axis 3
+^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 3
+    Name, Axis 3
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 12800
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    Id, 3
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 4
+    Velo:Maximum, 4
+    Velo:RefSearch, 0.05
+    Velo:RefSync, 0.05
+    Velo:SlowManual, 0.5
+
+
+
+Axis 4: Axis 4
+^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 4
+    Name, Axis 4
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 12800
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    Id, 4
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 4
+    Velo:Maximum, 4
+    Velo:RefSearch, 0.05
+    Velo:RefSync, 0.05
+    Velo:SlowManual, 0.5
+
+
+
+Axis 5: Axis 5
+^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 5
+    Name, Axis 5
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 12800
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    Id, 5
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 4
+    Velo:Maximum, 4
+    Velo:RefSearch, 0.05
+    Velo:RefSync, 0.05
+    Velo:SlowManual, 0.5
+
+
+
+Axis 6: Axis 6
+^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 6
+    Name, Axis 6
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 3200
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    General:UnitName, °
+    Id, 6
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 10
+    Velo:Maximum, 20
+    Velo:RefSearch, 0.5
+    Velo:RefSync, 0.5
+    Velo:SlowManual, 1
+
+
+
+Axis 7: Axis 7
+^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 7
+    Name, Axis 7
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 3200
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    General:UnitName, °
+    Id, 7
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 10
+    Velo:Maximum, 20
+    Velo:RefSearch, 0.5
+    Velo:RefSync, 0.5
+    Velo:SlowManual, 1
+
+
+
+Axis 8: Axis 8
+^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 8
+    Name, Axis 8
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 3200
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    General:UnitName, °
+    Id, 8
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 10
+    Velo:Maximum, 20
+    Velo:RefSearch, 0.5
+    Velo:RefSync, 0.5
+    Velo:SlowManual, 1
+
+
+
+Axis 9: Axis 9
+^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 9
+    Name, Axis 9
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 3200
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    General:UnitName, °
+    Id, 9
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 10
+    Velo:Maximum, 20
+    Velo:RefSearch, 0.5
+    Velo:RefSync, 0.5
+    Velo:SlowManual, 1
+
+
+
+Axis 10: Axis 10
+^^^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 10
+    Name, Axis 10
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 12800
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    General:UnitName, °
+    Id, 10
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 5
+    Velo:Maximum, 5
+    Velo:RefSearch, 0.1
+    Velo:RefSync, 0.1
+    Velo:SlowManual, 0.5
+
+
+
+Axis 11: Axis 11
+^^^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 11
+    Name, Axis 11
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 12800
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    General:UnitName, °
+    Id, 11
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 5
+    Velo:Maximum, 5
+    Velo:RefSearch, 0.1
+    Velo:RefSync, 0.1
+    Velo:SlowManual, 0.5
+
+
+
+Axis 12: Axis 12
+^^^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 12
+    Name, Axis 12
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 12800
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    General:UnitName, °
+    Id, 12
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 5
+    Velo:Maximum, 5
+    Velo:RefSearch, 0.1
+    Velo:RefSync, 0.1
+    Velo:SlowManual, 0.5
+
+
+
+Axis 13: Axis 13
+^^^^^^^^^^^^^^^^
+
+.. csv-table::
+    :header: Setting, Value
+    :align: center
+
+    Axis ID, 13
+    Name, Axis 13
+    AxisType, 1
+    CreateSymbols, true
+    Dynamic:Acceleration, 10
+    Dynamic:AccelerationMaximum, 10
+    Dynamic:Deceleration, 10
+    Dynamic:DecelerationMaximum, 10
+    Dynamic:DelayTime, 0.008
+    Dynamic:Jerk, 10
+    Enc:EncType, 4
+    Enc:Inc:RefSoftSyncMask, #x0000ffff
+    Enc:MaxCount, #x0000ffff
+    Enc:ScaleFactorDenominator, 12800
+    Enc:ScaleFactorNumerator, 1
+    Enc:TimeComp:EncDelayCycles, 4
+    Enc:TimeComp:TimeCompMode, 1
+    General:UnitName, °
+    Id, 13
+    OtherSettings:AllowMotionCmdToSlave, true
+    OtherSettings:PulseDistanceNeg, 1
+    OtherSettings:PulseDistancePos, 1
+    Velo:FastManual, 5
+    Velo:Maximum, 5
+    Velo:RefSearch, 0.1
+    Velo:RefSync, 0.1
+    Velo:SlowManual, 0.5
+
+
