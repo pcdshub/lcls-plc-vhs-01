@@ -1,0 +1,84 @@
+Box Hierarchy
+-------------
+
+
+#. **Term 1 (EK1200) [ID: 1]**
+        EK1200-5000 EtherCAT Power supply (2A E-Bus)
+
+    #. Term 2 (EL6070) [ID: 2]
+            EL6070 1Ch. Licensing-Terminal
+
+
+
+    #. Term 3 (EL7031) [ID: 3]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 4 (EL7031) [ID: 4]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 5 (EL7031) [ID: 5]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 6 (EL7031) [ID: 6]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 7 (EL7031) [ID: 7]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 8 (EL7031) [ID: 8]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 9 (EL7031) [ID: 9]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 10 (EL7031) [ID: 10]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 11 (EL7031) [ID: 11]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 12 (EL7031) [ID: 12]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 13 (EL7031) [ID: 13]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 14 (EL7031) [ID: 14]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 15 (EL7031) [ID: 15]
+            EL7031 1Ch. Stepper motor output stage (24V, 1.5A)
+
+
+
+    #. Term 16 (EL9011) [ID: 16]
+            EL9011 End Terminal
+
+
+
+
+
