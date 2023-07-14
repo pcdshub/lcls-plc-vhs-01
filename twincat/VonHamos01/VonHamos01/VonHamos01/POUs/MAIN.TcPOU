@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="Main" Id="{57a921db-ef5b-4e7a-9f5a-c29fdfc2cb69}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM Main
 VAR
+    nSanityCount: UINT;
+
 	M1: FB_DriveVirtual;
 	M1Link: FB_NcAxis;
 	bLimitFwdM1 AT %I*: BOOL;
@@ -69,7 +71,9 @@ VAR
 	bLimitBwdM13 AT %I*: BOOL;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[M1Link(En := TRUE);
+      <ST><![CDATA[nSanityCount := nSanityCount + 1;
+
+M1Link(En := TRUE);
 M1(En := TRUE,
    bEnable := TRUE,
    bLimitFwd := bLimitFwdM1,
@@ -160,9 +164,5 @@ M13(En := TRUE,
    bLimitBwd := TRUE, // bLimitBwdM13,
    Axis := M13Link.axis);]]></ST>
     </Implementation>
-    <LineIds Name="Main">
-      <LineId Id="130" Count="88" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

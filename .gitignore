@@ -8,6 +8,7 @@ _CompileInfo
 *.bak
 *.~u
 TrialLicense.tclrs
+*.dbg
 
 # EPICS ignores
 O.*
